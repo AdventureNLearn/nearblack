@@ -196,7 +196,7 @@ export const useNearblack = create<NearblackState>((set, get) => ({
   setSurface: (surface) => {
     if (get().surface === surface) return;
     set({ surface });
-    get().pushEvent(surface === "swamp" ? "Surface → MFS Lab" : "Surface → KISS");
+    get().pushEvent(surface === "swamp" ? "Surface → MFS Lab" : "Surface → Stay Dark Stay On");
   },
   setLaptop: (laptopId) => {
     set({ swamp: { ...get().swamp, source: "laptop", laptopId } });

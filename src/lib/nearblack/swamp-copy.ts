@@ -11,49 +11,49 @@ export const JOBS = [
   "embed · 12k chunks",
 ];
 
-const DRY: Record<"low" | "mid" | "high" | "black", string[]> = {
+const DRY_BANK: Record<"low" | "mid" | "high" | "black", string[]> = {
   low: [
-    "Pond still. Models napping.",
-    "Clocks down. Lily pad cold.",
-    "Nothing in the queue but frogs.",
+    "Load low. Clocks down.",
+    "Field dark. Models idle.",
+    "Nothing in the queue.",
   ],
   mid: [
-    "Tokens in the water. HUD on a diet.",
-    "Chat load. iGPU sharing the swamp.",
-    "Keep it sparse. The model is eating.",
+    "Keep the HUD quieter than the model.",
+    "Chat load. Shared GPU on a diet.",
+    "Sparse pixels. The box is eating.",
   ],
   high: [
-    "Swamp boiling. Shed the toys.",
     "Training has the GPU. HUD goes quiet.",
-    "Iris Xe would already be black.",
+    "Shed the toys. Watts go to inference.",
+    "iGPU SKUs would already be black.",
   ],
   black: [
-    "Mud. No glow. Frogs wait.",
     "Battery plus load. Field goes black.",
-    "KISS wins. Display sleeps.",
+    "Stay Dark wins. Display sleeps.",
+    "No glow. Touch to wake.",
   ],
 };
 
-const SWAMPY: Record<"low" | "mid" | "high" | "black", string[]> = {
+const SAVAGE: Record<"low" | "mid" | "high" | "black", string[]> = {
   low: [
-    "Ribbit withheld. The pond is civil.",
-    "A frog sits on the idle clock.",
-    "MFS built a quieter swamp than this.",
+    "Merciless on watts. Fearless on black.",
+    "Disgruntled. HUD still sparse.",
+    "Savage on the GPU. Civil on the pixels.",
   ],
   mid: [
-    "Lily hop. Tokens hopping too.",
-    "Do not make the HUD louder than the model.",
-    "Heavy AI, light frog. That is the deal.",
+    "Keep it honest. Simulated, not a sensor.",
+    "The model can think. The panel should not burn.",
+    "Fearless load. Merciless HUD budget.",
   ],
   high: [
-    "The GPU is a hungry toad. HUD starves first.",
-    "48GB later. Right now the swamp is on fire.",
-    "KISS is the adult. This lab is the dare.",
+    "GPU first. HUD starves. That is the deal.",
+    "Savage training. Sparse remaining.",
+    "Stay Dark is the adult. This lab is the dare.",
   ],
   black: [
-    "Lights out in the cattails.",
-    "No HUD. Only mud and math.",
-    "Touch to wake the frog.",
+    "Lights out. Touch to wake.",
+    "No HUD. Only math.",
+    "Battery plus swarm. Field goes black.",
   ],
 };
 
@@ -63,14 +63,14 @@ export function pickQuip(
   black: boolean,
   tick: number,
 ) {
-  const bank = humor === "swamp" ? SWAMPY : DRY;
+  const bank = humor === "swamp" ? SAVAGE : DRY_BANK;
   const lane = black ? "black" : loadPct > 70 ? "high" : loadPct > 28 ? "mid" : "low";
   const list = bank[lane];
   return list[tick % list.length] ?? list[0];
 }
 
 export function pickJob(loadPct: number, tick: number) {
-  if (loadPct < 8) return "queue empty · pond idle";
+  if (loadPct < 8) return "queue empty · idle";
   if (loadPct > 92) return "queue saturated · shed HUD";
   return JOBS[tick % JOBS.length] ?? JOBS[0];
 }
@@ -81,6 +81,12 @@ export const MODULE_HINT: Record<ModuleId, string> = {
   quip: "One line. No parade.",
   aiTicker: "What the box is chewing.",
   gpuMeter: "Simulated draw, not a sensor.",
-  vram: "Shared on Iris Xe. Real on Heavy.",
+  vram: "Shared on iGPU SKUs. Dedicated on dGPU.",
   jobs: "Loudest module. First to shed.",
+};
+
+export const DRIFT_LABEL: Record<"glide" | "lily" | "orbit", string> = {
+  glide: "glide",
+  lily: "pulse",
+  orbit: "orbit",
 };

@@ -22,13 +22,13 @@ export function LabStrip() {
     <aside className="rounded-3xl border border-border bg-bg-elevated p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="font-sans text-sm font-medium text-fg">KISS Lab</h2>
+          <h2 className="font-sans text-sm font-medium text-fg">Stay Dark Stay On</h2>
           <p className="mt-1 text-xs text-muted text-pretty">
-            Feel first. This side is frozen. Wattage unproven on the Pavilion.
+            Feel first. This side is frozen. Watts are simulated, not measured.
           </p>
         </div>
         <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-subtle">
-          v0.1 kiss
+          locked
         </span>
       </div>
 

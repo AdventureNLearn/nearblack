@@ -14,7 +14,7 @@ export function SurfaceSwitch() {
       <Tab
         selected={surface === "kiss"}
         onClick={() => setSurface("kiss")}
-        label="KISS"
+        label="Stay Dark Stay On"
       />
       <Tab
         selected={surface === "swamp"}
@@ -41,7 +41,7 @@ function Tab({
       aria-selected={selected}
       onClick={onClick}
       className={cn(
-        "h-9 min-w-20 rounded-full px-4 text-xs font-medium tracking-wide transition-[background-color,color,transform] duration-150",
+        "h-9 min-w-16 rounded-full px-3 text-[0.65rem] font-medium tracking-wide transition-[background-color,color,transform] duration-150 sm:px-4 sm:text-xs",
         selected
           ? "bg-accent text-accent-fg"
           : "text-muted hover:text-fg",
@@ -53,5 +53,5 @@ function Tab({
 }
 
 export function surfaceName(s: Surface) {
-  return s === "swamp" ? "MFS Lab" : "KISS";
+  return s === "swamp" ? "MFS Lab" : "Stay Dark Stay On";
 }

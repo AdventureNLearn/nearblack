@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ClockFace } from "@/components/nearblack/clock-face";
-import { FrogMark } from "@/components/nearblack/frog-mark";
+import { MfsMark } from "@/components/nearblack/mfs-mark";
 import { useClock } from "@/lib/nearblack/use-clock";
 import { usePlan } from "@/lib/nearblack/use-plan";
 import { pickJob, pickQuip } from "@/lib/nearblack/swamp-copy";
@@ -94,7 +94,7 @@ export function SwampIdle() {
             transition: reduced ? "none" : `transform ${ms}s cubic-bezier(0.22, 1, 0.36, 1)`,
           }}
         >
-          <FrogMark className="mx-auto mb-5 size-7 opacity-70" />
+          <MfsMark className="mx-auto mb-5 size-7 opacity-70" />
           {allowed("clock") ? (
             <ClockFace
               parts={parts}

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FrogMark } from "@/components/nearblack/frog-mark";
+import { MfsMark } from "@/components/nearblack/mfs-mark";
 import { LabStrip } from "@/components/nearblack/lab-strip";
 import { SurfaceSwitch } from "@/components/nearblack/surface-switch";
 import { SwampLab } from "@/components/nearblack/swamp-lab";
@@ -65,7 +65,7 @@ function KissHero({ remaining, progress }: { remaining: number; progress: number
   return (
     <section className="pt-2 sm:pt-8">
       <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-subtle">
-        KISS · locked
+        Stay Dark · Stay On
       </p>
       <h1 className="mt-4 font-display text-4xl font-medium tracking-tight text-balance text-fg sm:text-5xl lg:text-6xl">
         Stay dark.
@@ -73,8 +73,8 @@ function KissHero({ remaining, progress }: { remaining: number; progress: number
         Stay on.
       </h1>
       <p className="mt-5 max-w-md text-sm leading-relaxed text-pretty text-muted sm:text-base">
-        The simple HUD is frozen. Black field, sparse clock, slow drift. Toys
-        and hardware sims live in MFS Lab.
+        The HUD is frozen. Black field, sparse clock, slow drift. Hardware sims
+        live in MFS Lab.
       </p>
 
       <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -99,8 +99,8 @@ function SwampHero({ remaining, progress }: { remaining: number; progress: numbe
   return (
     <section className="pt-2 sm:pt-8">
       <p className="flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.28em] text-subtle">
-        <FrogMark className="size-4" />
-        For MFSHacks
+        <MfsMark className="size-4" />
+        Merciless · Fearless · Savage
       </p>
       <h1 className="mt-4 font-display text-4xl font-medium tracking-tight text-balance text-fg sm:text-5xl lg:text-6xl">
         Break the HUD
@@ -175,7 +175,7 @@ function MiniPreview() {
         <span className="text-[0.65rem] uppercase tracking-[0.2em] text-subtle">
           HUD preview
         </span>
-        <span className="text-[0.65rem] text-subtle">KISS</span>
+        <span className="text-[0.65rem] text-subtle">Stay Dark</span>
       </div>
       <div className="flex h-36 items-center justify-center">
         <div className="text-center" style={{ opacity: hudOpacity }}>
@@ -200,7 +200,7 @@ function SwampPreview() {
     <div className="mt-12 max-w-sm overflow-hidden rounded-2xl border border-border bg-void">
       <div className="flex items-center justify-between px-3 py-2">
         <span className="text-[0.65rem] uppercase tracking-[0.2em] text-subtle">
-          Swamp preview
+          MFS preview
         </span>
         <span className="text-[0.65rem] text-subtle">
           {plan.forceBlack ? "black" : `${plan.allowed.length} mods`}
@@ -213,7 +213,7 @@ function SwampPreview() {
           </p>
         ) : (
           <div className="text-center" style={{ opacity: hudOpacity + 0.08 }}>
-            <FrogMark className="mx-auto mb-2 size-5 opacity-70" />
+            <MfsMark className="mx-auto mb-2 size-5 opacity-70" />
             <p className="font-display text-3xl font-light tabular-nums tracking-tight text-hud">
               {parts.time}
             </p>

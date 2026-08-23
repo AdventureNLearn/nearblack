@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { MODULES, WORKLOADS, type Density, type DriftStyle } from "@/lib/nearblack/hardware";
-import { MODULE_HINT } from "@/lib/nearblack/swamp-copy";
+import { MODULE_HINT, DRIFT_LABEL } from "@/lib/nearblack/swamp-copy";
 import { usePlan } from "@/lib/nearblack/use-plan";
 import { useNearblack } from "@/lib/nearblack/store";
 import { cn } from "@/lib/utils";
@@ -39,11 +39,11 @@ export function SwampLab() {
         <div>
           <h2 className="font-sans text-sm font-medium text-fg">MFS Lab</h2>
           <p className="mt-1 text-xs text-muted text-pretty">
-            Frog toys for testing. KISS stays frozen on the other tab.
+            Merciless on watts. Stay Dark stays frozen on the other tab.
           </p>
         </div>
         <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-subtle">
-          sim
+          savage
         </span>
       </div>
 
@@ -237,7 +237,7 @@ export function SwampLab() {
                 : "border-border text-muted",
             )}
           >
-            {d}
+            {DRIFT_LABEL[d]}
           </button>
         ))}
       </div>
@@ -271,7 +271,7 @@ export function SwampLab() {
                 : "border-border text-muted",
             )}
           >
-            {h}
+            {h === "swamp" ? "savage" : "dry"}
           </button>
         ))}
       </div>

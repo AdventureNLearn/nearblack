@@ -31,7 +31,7 @@ export type Machine = {
 };
 
 export const WORKLOADS: { id: WorkloadId; label: string; loadPct: number }[] = [
-  { id: "pond", label: "Pond", loadPct: 4 },
+  { id: "pond", label: "Idle", loadPct: 4 },
   { id: "chat", label: "Chat", loadPct: 16 },
   { id: "infer", label: "Infer", loadPct: 52 },
   { id: "train", label: "Train", loadPct: 84 },
@@ -41,7 +41,7 @@ export const WORKLOADS: { id: WorkloadId; label: string; loadPct: number }[] = [
 export const MODULES: { id: ModuleId; label: string; costW: number }[] = [
   { id: "clock", label: "Clock", costW: 0.35 },
   { id: "date", label: "Date", costW: 0.08 },
-  { id: "quip", label: "Frog line", costW: 0.16 },
+  { id: "quip", label: "Line", costW: 0.16 },
   { id: "aiTicker", label: "AI ticker", costW: 0.55 },
   { id: "gpuMeter", label: "GPU meter", costW: 0.42 },
   { id: "vram", label: "VRAM", costW: 0.28 },
@@ -168,7 +168,7 @@ export function planHardware(input: HardwareInputs): HardwarePlan {
   if (forceBlack) verdict = "Battery + load. Black field only.";
   else if (shed.length) verdict = `Shed ${shed.length} module${shed.length > 1 ? "s" : ""} to keep clocks down.`;
   else if (!machine.sharedMemory && input.loadPct > 80)
-    verdict = "Training hard. HUD still has a lily pad.";
+    verdict = "Training hard. HUD still has headroom.";
   else if (machine.sharedMemory && input.loadPct > 50)
     verdict = "Shared GPU is the bottleneck, not the wall wattage.";
 
