@@ -14,12 +14,6 @@ import { DEFAULT_SIMS, newSimId, type CustomSim } from "./sims";
 export type PowerMode = "ac" | "battery";
 export type Surface = "kiss" | "swamp";
 
-export type LabEvent = {
-  id: number;
-  at: string;
-  msg: string;
-};
-
 export type Settings = {
   power: PowerMode;
   idleTimeoutSec: number;
@@ -75,11 +69,6 @@ export const DEFAULT_SWAMP: SwampSettings = {
   humor: "swamp",
 };
 
-function stamp(): string {
-  const d = new Date();
-  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-}
-
 function currentSim(swamp: SwampSettings): CustomSim | null {
   return swamp.sims.find((s) => s.id === swamp.simId) ?? swamp.sims[0] ?? null;
 }
@@ -96,8 +85,6 @@ type NearblackState = Settings & {
   isIdle: boolean;
   idleArmedAt: number;
   clock: { time: string; date: string };
-  events: LabEvent[];
-  eventSeq: number;
   goIdle: (reason?: string) => void;
   wake: () => void;
   setPower: (power: PowerMode) => void;
@@ -122,7 +109,6 @@ type NearblackState = Settings & {
   setDensity: (d: Density) => void;
   setHumor: (h: "dry" | "swamp") => void;
   hydrate: (partial: Partial<Settings>, swamp?: Partial<SwampSettings>) => void;
-  pushEvent: (msg: string) => void;
   tickClock: () => void;
   tryWake: () => void;
 };
@@ -137,33 +123,13 @@ export const useNearblack = create<NearblackState>((set, get) => ({
   isIdle: false,
   idleArmedAt: 0,
   clock: { time: "–:––", date: "—" },
-  events: [],
-  eventSeq: 1,
-  pushEvent: (msg) => {
-    const id = get().eventSeq;
-    set({
-      eventSeq: id + 1,
-      events: [{ id, at: stamp(), msg }, ...get().events].slice(0, 12),
-    });
-  },
   goIdle: (reason) => {
     if (get().isIdle) return;
     set({ isIdle: true, idleArmedAt: Date.now() });
-    const batt = get().power === "battery";
-    const swamp = get().surface === "swamp";
-    get().pushEvent(
-      reason ??
-        (batt
-          ? "Idle — battery black"
-          : swamp
-            ? "Idle — MFS Lab HUD"
-            : "Idle — HUD on"),
-    );
   },
   wake: () => {
     if (!get().isIdle) return;
     set({ isIdle: false, idleArmedAt: 0 });
-    get().pushEvent("Wake");
   },
   tryWake: () => {
     if (!get().isIdle) return;
@@ -184,30 +150,25 @@ export const useNearblack = create<NearblackState>((set, get) => ({
   setPower: (power) => {
     if (get().power === power) return;
     set({ power });
-    get().pushEvent(power === "battery" ? "Power → battery" : "Power → AC");
   },
   setIdleTimeoutSec: (n) => set({ idleTimeoutSec: n }),
   setHudOpacity: (n) => set({ hudOpacity: n }),
   setDriftIntervalSec: (n) => set({ driftIntervalSec: n }),
   setHoldDesk: (v) => {
     set({ holdDesk: v });
-    get().pushEvent(v ? "Hold desk on" : "Hold desk off");
   },
   setSurface: (surface) => {
     if (get().surface === surface) return;
     set({ surface });
-    get().pushEvent(surface === "swamp" ? "Surface → MFS Lab" : "Surface → Stay Dark Stay On");
   },
   setLaptop: (laptopId) => {
     set({ swamp: { ...get().swamp, source: "laptop", laptopId } });
-    get().pushEvent(`Laptop → ${laptopId}`);
   },
   setSim: (simId) => {
     const swamp = get().swamp;
     const exists = swamp.sims.some((s) => s.id === simId);
     if (!exists) return;
     set({ swamp: { ...swamp, source: "mfs", simId } });
-    get().pushEvent(`MFS sim → ${simId}`);
   },
   createSim: (name) => {
     const swamp = get().swamp;
@@ -228,7 +189,6 @@ export const useNearblack = create<NearblackState>((set, get) => ({
         sims: [...swamp.sims, sim],
       },
     });
-    get().pushEvent(`Saved ${sim.name}`);
   },
   renameSim: (name) => {
     const trimmed = name.slice(0, 48);
@@ -246,7 +206,6 @@ export const useNearblack = create<NearblackState>((set, get) => ({
         source: "mfs",
       },
     });
-    get().pushEvent("Deleted MFS sim");
   },
   setSimTdpW: (tdpW) => set({ swamp: patchSim({ ...get().swamp, source: "mfs" }, { tdpW }) }),
   setSimGpuMaxW: (gpuMaxW) => set({ swamp: patchSim({ ...get().swamp, source: "mfs" }, { gpuMaxW }) }),
@@ -262,7 +221,6 @@ export const useNearblack = create<NearblackState>((set, get) => ({
         loadPct: preset?.loadPct ?? get().swamp.loadPct,
       },
     });
-    get().pushEvent(`Workload → ${workload}`);
   },
   setLoadPct: (loadPct) => {
     set({ swamp: { ...get().swamp, loadPct, workload: closestWorkload(loadPct) } });

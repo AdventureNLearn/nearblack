@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 export function SwampLab() {
   const swamp = useNearblack((s) => s.swamp);
-  const events = useNearblack((s) => s.events);
   const power = useNearblack((s) => s.power);
   const holdDesk = useNearblack((s) => s.holdDesk);
   const setPower = useNearblack((s) => s.setPower);
@@ -274,20 +273,6 @@ export function SwampLab() {
             {h === "swamp" ? "savage" : "dry"}
           </button>
         ))}
-      </div>
-
-      <div className="mt-6 border-t border-border pt-4">
-        <p className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-subtle">
-          Event log
-        </p>
-        <ul className="mt-3 space-y-1.5 font-mono text-[0.7rem] text-muted">
-          {events.map((e) => (
-            <li key={e.id} className="flex gap-3">
-              <span className="shrink-0 tabular-nums text-subtle">{e.at}</span>
-              <span className="min-w-0 text-pretty">{e.msg}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </aside>
   );

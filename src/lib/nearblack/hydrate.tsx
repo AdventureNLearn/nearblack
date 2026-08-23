@@ -8,9 +8,6 @@ export function HydrateSettings() {
     useNearblack.getState().hydrate(kiss, swamp);
     useNearblack.getState().tickClock();
     registerPwa();
-    if (useNearblack.getState().events.length === 0) {
-      useNearblack.getState().pushEvent("Desk ready. Idle timer armed.");
-    }
     const clockId = window.setInterval(() => useNearblack.getState().tickClock(), 1000);
     const unsub = useNearblack.subscribe((s) => {
       saveKiss({

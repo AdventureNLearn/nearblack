@@ -37,3 +37,5 @@ npm run preview
 ## Honest limits
 
 This is a web HUD lab. It does not yet hook Windows `SetThreadExecutionState` or a real sensor. Watts are simulated so you can test the policy on any machine.
+
+The lab event log was stripped from production. Snapshot lives in [`archive/event-log.md`](archive/event-log.md).
